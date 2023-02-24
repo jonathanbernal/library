@@ -1,0 +1,31 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "A library wishlist that allows a user to add, update, or remove books from it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanbernal/library.git"
+  },
+  "keywords": [
+    "library",
+    "theodinproject",
+    "odinproject"
+  ],
+  "author": "Jonathan Bernal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathanbernal/library/issues"
+  },
+  "homepage": "https://github.com/jonathanbernal/library#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "prettier": "2.8.4"
+  }
+}
