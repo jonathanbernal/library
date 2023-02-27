@@ -34,8 +34,31 @@
         </div> -->
     </div>
 
+    <!-- dialog is opened while working on the UI-->
+    <dialog class="add-book-dialog" open>
+        <form>
+          <input type="text" name="book-title" placeholder="Title">
+          <input type="text" name="book-author"
+                 placeholder="Author">
+          <label>Read?
+            <label>
+                Yes
+                <input type="radio" name="read" value="yes">
+            </label>
+            <label>
+                No
+                <input type="radio" name="read" value="no">
+            </label>
+          </label>
+          <div>
+            <button type="submit" class="btn" id="submit">Add Book</button>
+            <button type="button" class="btn">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+
     <footer>
-        <p>Made by Jonathan</p>
+        <p>Made by Jonathan Bernal</p>
     </footer>
 </body>
 </html>
