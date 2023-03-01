@@ -157,12 +157,12 @@ function displayAddBookDialog() {
         bookLibrary.push(bookObject);
         // close right after adding the book
         addBookDialog.close();
-    })
+    });
     
     const cancelButton = createButtonElement('Cancel', 'button', 'btn');
     cancelButton.addEventListener('click', () => {
         addBookDialog.close();
-    })
+    });
 
     dialogButtonContainer.append(addBookToLibraryButton, cancelButton);
 
