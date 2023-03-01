@@ -2,9 +2,9 @@ const bookShelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('.add-book-btn');
 const showAllBooksButton = document.querySelector('.show-all-books-btn');
 
-const bookInLibraryCount = 0;
-const totalBooksRead = 0;
-const totalBooksUnread = 0;
+let booksInLibraryCount = 0;
+let totalBooksRead = 0;
+let totalBooksUnread = 0;
    
 const bookLibrary = [];
 
