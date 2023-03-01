@@ -1,7 +1,10 @@
 const bookShelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('.add-book-btn');
 const showAllBooksButton = document.querySelector('.show-all-books-btn');
-// const addBookDialog = document.querySelector('#add-book-dialog');
+
+const bookInLibraryCount = 0;
+const totalBooksRead = 0;
+const totalBooksUnread = 0;
    
 const bookLibrary = [];
 
@@ -14,9 +17,6 @@ class Book {
 }
 
 function addBookToLibrary() {
-    function AddBookDialog() {
-        
-    }
 
     if (!(bookToAdd instanceof Book))
         throw new Error('on addBookToLibrary(). Provided argument is not a Book');
