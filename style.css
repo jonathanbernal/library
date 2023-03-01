@@ -78,7 +78,7 @@ header > h1 {
 
 .add-book-dialog {
     position: relative;
-    top: -10%;
+    top: 30%;
     left: 40%;
     padding: 2rem;
     background-color: #E4E6F0;
@@ -93,6 +93,11 @@ header > h1 {
     gap: 0.5rem;
 }
 
+.dialog-btn-container {
+    display: flex;
+    gap: 1rem;
+}
+
 .add-book-dialog form input[type="text"] {
     padding: 0.5rem 0.75rem;
     border: solid 1px var(--slate-color);
@@ -101,6 +106,11 @@ header > h1 {
 
 form input[type="text"]:focus {
     outline: solid 1px var(--slate-secondary-color);
+}
+
+.radio-input-container {
+    display: flex;
+    gap: 0.5rem;
 }
 
 footer {
