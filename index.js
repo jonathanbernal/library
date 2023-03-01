@@ -141,8 +141,6 @@ function displayAddBookDialog() {
     noLabel.prepend(radioInputNo);
 
     radioInputContainer.append(readLabel, yesLabel, noLabel);
-    
-    const radioInputValue = document.querySelector('input[type="radio"]');
 
     bookForm.append(radioInputContainer);
 
