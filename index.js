@@ -16,50 +16,8 @@ class Book {
     }
 }
 
-function addBookToLibrary() {
-
-    if (!(bookToAdd instanceof Book))
-        throw new Error('on addBookToLibrary(). Provided argument is not a Book');
-    
-    bookLibrary.push(bookToAdd);
-}
-
-function displayBooks() { 
-    bookLibrary.map((book) => {
-        const bookNode = document.createElement('div');
-        bookNode.classList.add('book');
-
-        const bookInfoNode = document.createElement('div');
-        bookInfoNode.classList.add('book-info');
-        bookNode.appendChild(bookInfoNode);
-
-        const bookTitleNode = document.createElement('h2');
-        bookTitleNode.classList.add('book-title');
-        bookTitleNode.textContent = book.title;
-        bookInfoNode.appendChild(bookTitleNode);
-
-        const bookAuthorNode = document.createElement('p');
-        bookAuthorNode.classList.add('book-author');
-        bookAuthorNode.textContent = book.author;
-        bookInfoNode.appendChild(bookAuthorNode);
-
-        const bookReadButton = document.createElement('button');
-        // Default values for the button
-        bookReadButton.setAttribute('value', book.isRead);
-        bookReadButton.textContent = book.isRead ? 'Read' : 'Unread';
-        // Update button values upon clicking on the Read/Unread button
-        bookReadButton.addEventListener('click', () => {
-            book.isRead = !book.isRead;
-            bookReadButton.setAttribute('value', book.isRead);
-            bookReadButton.textContent = book.isRead ? 'Read' : 'Unread';
-        });
-        bookInfoNode.appendChild(bookReadButton);
-
-        return bookShelf.appendChild(bookNode);
-    });
-}
-
-showAllBooksButton.addEventListener('click', ()=> displayBooks());
+const incrementBooksInLibraryCount = () => booksInLibraryCount += 1;
+const decrementBooksInLibraryCount = () => booksInLibraryCount -= 1;
 
 function createAddBookDialogElement() {
     const addBookDialogElement = document.createElement('dialog');
@@ -114,6 +72,57 @@ function createDivElement(textContent, divId, ...classList) {
     }
     divElement.classList.add(...classList);
     return divElement;
+}
+
+function createHeadingElement(headingType, textContent, ...classList) {
+    const headingElement = document.createElement(headingType);
+    headingElement.textContent = textContent;
+    headingElement.classList.add(...classList);
+    return headingElement;
+}
+
+function createParagraphElement(textContent, paragraphId, ...classList) {
+    const paragraphElement = document.createElement('p');
+    paragraphElement.textContent = textContent;
+    paragraphElement.id = paragraphId;
+    paragraphElement.classList.add(...classList);
+    return paragraphElement;
+}
+
+function addBookToLibrary(bookToAdd) {
+
+    if (!(bookToAdd instanceof Book))
+        throw new Error('on addBookToLibrary(). Provided argument is not a Book');
+    
+    bookLibrary.push(bookToAdd);
+}
+
+function displayBooks() {
+    bookLibrary.map((book) => {
+        const bookElement = createDivElement(null, null, 'book');
+
+        const bookInfoElement = createDivElement(null, null, 'book-info');
+        bookElement.appendChild(bookInfoElement);
+
+        const bookTitleElement = createHeadingElement('h2', book.title);
+        const bookAuthorElement = createParagraphElement(book.author, null, 'book-author');
+        bookInfoElement.appendChild(bookTitleElement, bookAuthorElement);
+
+        const bookReadButton = document.createElement('button');
+
+        // Default values for the button
+        bookReadButton.setAttribute('value', book.isRead);
+        bookReadButton.textContent = book.isRead ? 'Read' : 'Unread';
+        // Update button values upon clicking on the Read/Unread button
+        bookReadButton.addEventListener('click', () => {
+            book.isRead = !book.isRead;
+            bookReadButton.setAttribute('value', book.isRead);
+            bookReadButton.textContent = book.isRead ? 'Read' : 'Unread';
+        });
+        bookInfoElement.appendChild(bookReadButton);
+
+        return bookShelf.appendChild(bookElement);
+    });
 }
 
 function displayAddBookDialog() {
@@ -174,4 +183,5 @@ function displayAddBookDialog() {
     addBookDialog.showModal();
 }
 
+showAllBooksButton.addEventListener('click', ()=> displayBooks());
 addBookButton.addEventListener('click', displayAddBookDialog);
