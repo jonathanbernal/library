@@ -106,9 +106,9 @@ function displayBooks() {
 
         const bookTitleElement = createHeadingElement('h2', book.title);
         const bookAuthorElement = createParagraphElement(book.author, null, 'book-author');
-        bookInfoElement.appendChild(bookTitleElement, bookAuthorElement);
+        bookInfoElement.append(bookTitleElement, bookAuthorElement);
 
-        const bookReadButton = document.createElement('button');
+        const bookReadButton = document.createElement('button'); 
 
         // Default values for the button
         bookReadButton.setAttribute('value', book.isRead);
