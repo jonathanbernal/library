@@ -63,11 +63,12 @@ header > h1 {
 .book {
     display: flex;
     flex-direction: column;
-    
+    gap: 0.5rem;
+    justify-content: center;
     width: 100%;
     background: #E4E6F0;
     box-shadow: 1px 1px 1px rgb(153, 153, 156);
-    padding: 0.5rem;
+    padding: 1.25rem 0.5rem;
 }
 
 .book-info {
@@ -93,7 +94,7 @@ header > h1 {
     gap: 0.5rem;
 }
 
-.dialog-btn-container {
+.btn-container {
     display: flex;
     gap: 1rem;
 }
@@ -111,6 +112,24 @@ form input[type="text"]:focus {
 .radio-input-container {
     display: flex;
     gap: 0.5rem;
+}
+
+.book-title {
+    text-align: center;
+}
+
+button[value="true"] {
+    background-color: green;
+    color: var(--white-color);
+}
+
+button[value="false"] {
+    background-color: var(--slate-secondary-color);
+    color: var(--white-color);
+}
+
+.delete {
+    background-color: red;
 }
 
 footer {
