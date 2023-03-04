@@ -124,7 +124,7 @@ button[value="true"] {
 }
 
 button[value="false"] {
-    background-color: var(--slate-secondary-color);
+    background-color: var(--button-primary-color);
     color: var(--white-color);
 }
 
