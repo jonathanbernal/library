@@ -128,6 +128,10 @@ button[value="false"] {
     color: var(--white-color);
 }
 
+.error-message {
+    color: red;
+}
+
 .delete {
     background-color: red;
 }
