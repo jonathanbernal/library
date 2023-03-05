@@ -6,7 +6,7 @@ let booksInLibraryCount = 0;
 let totalBooksRead = 0;
 let totalBooksUnread = 0;
    
-const bookLibrary = [];
+let bookLibrary = [];
 
 class Book {
     constructor(title, author, isRead) {
@@ -101,8 +101,6 @@ function searchForDuplicateBooks(bookToSearch) {
         throw new Error('on searchForDuplicateBooks(). Provided argument is not a Book');
     // eslint-disable-next-line no-restricted-syntax, prefer-const
     for(let book of bookLibrary) {
-        console.log(book.title);
-        console.log(bookToSearch.title);
         if(bookToSearch.title.toLowerCase() === book.title.toLowerCase()
             && bookToSearch.author.toLowerCase() === book.author.toLowerCase()) {
             return true;
@@ -117,6 +115,20 @@ function addBookToLibrary(bookToAdd) {
         throw new Error('on addBookToLibrary(). Provided argument is not a Book');
     
     bookLibrary.push(bookToAdd);
+}
+
+function deleteBookFromLibrary(bookToDelete) {
+    if (!(bookToDelete instanceof Book))
+        throw new Error('on deleteBookFromLibrary(). Provided argument is not a Book');
+
+    bookLibrary = bookLibrary.filter(bookItem => bookItem !== bookToDelete);
+}
+
+function deleteBookFromBookshelfElement(bookToDelete) {
+    if (!(bookToDelete instanceof HTMLDivElement)) {
+        throw new Error('on deleteBookFromBookshelfElement(). Provided argument must be of tye HtmlDivElement');
+    }
+    return bookShelf.removeChild(bookToDelete);
 }
 
 function displayBooks() {
@@ -144,6 +156,12 @@ function displayBooks() {
         });
 
         const bookDeleteButton = createButtonElement('Delete', 'button', 'btn', 'delete');
+        bookDeleteButton.addEventListener('click', () => {
+            // delete book element from the bookshelf HTML element
+            deleteBookFromBookshelfElement(bookElement);
+            // delete book object from the book library array
+            deleteBookFromLibrary(book);
+        });
         bookButtonContainer.append(bookReadButton, bookDeleteButton);
         bookElement.append(bookButtonContainer);
 
@@ -188,6 +206,7 @@ function displayAddBookDialog() {
         // This variable retrieves the checked value from the two radio inputs.
         const radioReadValue = Array.from(radioReadElements)
             .find(radioChoice => radioChoice.checked).value;
+        console.log(radioReadValue);
         // This variable is used to sanitize the value passed to the book object.
         // When we retrieve the value from the form, this value is returned as a string.
         // What we're doing here is converting it to a Boolean.
@@ -199,11 +218,10 @@ function displayAddBookDialog() {
             addBookToLibrary(bookObject);
             // close right after adding the book
             addBookDialog.close();
-        } else {
-            const addBookErrorMessageElement = createParagraphElement('Error. This book already exists.', '', 'error-message');
-            bookForm.append(addBookErrorMessageElement);
+        } else if(! document.querySelector('#book-error-message')) {
+                const addBookErrorMessageElement = createParagraphElement('Error. This book already exists.', 'book-error-message', 'error-message');
+                bookForm.append(addBookErrorMessageElement);
         }
-        
     });
     
     const cancelButton = createButtonElement('Cancel', 'button', 'btn');
