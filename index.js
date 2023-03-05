@@ -96,8 +96,23 @@ function createParagraphElement(textContent, paragraphId, ...classList) {
     return paragraphElement;
 }
 
-function addBookToLibrary(bookToAdd) {
+function searchForDuplicateBooks(bookToSearch) {
+    if (!(bookToSearch instanceof Book))
+        throw new Error('on searchForDuplicateBooks(). Provided argument is not a Book');
+    // eslint-disable-next-line no-restricted-syntax, prefer-const
+    for(let book of bookLibrary) {
+        console.log(book.title);
+        console.log(bookToSearch.title);
+        if(bookToSearch.title.toLowerCase() === book.title.toLowerCase()
+            && bookToSearch.author.toLowerCase() === book.author.toLowerCase()) {
+            return true;
+        }
+    }
 
+    return false;
+}
+
+function addBookToLibrary(bookToAdd) {
     if (!(bookToAdd instanceof Book))
         throw new Error('on addBookToLibrary(). Provided argument is not a Book');
     
@@ -144,8 +159,7 @@ function displayAddBookDialog() {
 
     bookForm.append(bookTitle, bookAuthor); 
 
-    const readLabel =  createLabelElementWithForAttribute('Read?', 
-        'radio-input-container');
+    const readLabel =  createLabelElementWithForAttribute('Read?', 'radio-input-container');
     
     const radioInputContainer = createDivElement(null, 'radio-input-container', 'radio-input-container');
 
@@ -179,10 +193,17 @@ function displayAddBookDialog() {
         // What we're doing here is converting it to a Boolean.
         const isRadioReadValue = radioReadValue === 'true';
         
-        const bookObject = new Book(bookTitle.value, bookAuthor.value, isRadioReadValue); 
-        bookLibrary.push(bookObject);
-        // close right after adding the book
-        addBookDialog.close();
+        const bookObject = new Book(bookTitle.value, bookAuthor.value, isRadioReadValue);
+
+        if(!searchForDuplicateBooks(bookObject)) { // If the book does not exist
+            addBookToLibrary(bookObject);
+            // close right after adding the book
+            addBookDialog.close();
+        } else {
+            const addBookErrorMessageElement = createParagraphElement('Error. This book already exists.', '', 'error-message');
+            bookForm.append(addBookErrorMessageElement);
+        }
+        
     });
     
     const cancelButton = createButtonElement('Cancel', 'button', 'btn');
