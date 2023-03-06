@@ -131,42 +131,53 @@ function deleteBookFromBookshelfElement(bookToDelete) {
     return bookShelf.removeChild(bookToDelete);
 }
 
-function displayBooks() {
-    bookLibrary.map((book) => {
-        const bookElement = createDivElement(null, null, 'book');
+function createBookElementFromBookObject (bookObject) {
+    if (!(bookObject instanceof Book)) {
+        throw new Error('on createBookElementFromBookObject(). Provided argument is not a Book');
+    }
 
-        const bookInfoElement = createDivElement(null, null, 'book-info');
-        bookElement.appendChild(bookInfoElement);
+    const bookElement = createDivElement(null, null, 'book');
 
-        const bookTitleElement = createHeadingElement('h2', book.title, 'book-title');
-        const bookAuthorElement = createParagraphElement(book.author, null, 'book-author');
-        bookInfoElement.append(bookTitleElement, bookAuthorElement);
+    const bookInfoElement = createDivElement(null, null, 'book-info');
+    bookElement.appendChild(bookInfoElement);
 
-        const bookButtonContainer = createDivElement(null, '', 'btn-container');
+    const bookTitleElement = createHeadingElement('h2', bookObject.title, 'book-title');
+    const bookAuthorElement = createParagraphElement(bookObject.author, null, 'book-author');
+    bookInfoElement.append(bookTitleElement, bookAuthorElement);
 
-        const isBookRead = book.getIsBookRead() ? 'Read' : 'Not read';
-        const bookReadButton = createButtonElement(isBookRead, 'button', 'btn');
-        bookReadButton.setAttribute('value', book.getIsBookRead());
-        
-        // Update button values upon clicking on the Read/Unread button
-        bookReadButton.addEventListener('click', () => {
-            book.toggleRead();
-            bookReadButton.setAttribute('value', book.getIsBookRead());
-            bookReadButton.textContent = book.getIsBookRead() ? 'Read' : 'Not read';
-        });
+    const bookButtonContainer = createDivElement(null, '', 'btn-container');
 
-        const bookDeleteButton = createButtonElement('Delete', 'button', 'btn', 'delete');
-        bookDeleteButton.addEventListener('click', () => {
-            // delete book element from the bookshelf HTML element
-            deleteBookFromBookshelfElement(bookElement);
-            // delete book object from the book library array
-            deleteBookFromLibrary(book);
-        });
-        bookButtonContainer.append(bookReadButton, bookDeleteButton);
-        bookElement.append(bookButtonContainer);
+    const isBookRead = bookObject.getIsBookRead() ? 'Read' : 'Not read';
+    const bookReadButton = createButtonElement(isBookRead, 'button', 'btn');
+    bookReadButton.setAttribute('value', bookObject.getIsBookRead());
 
-        return bookShelf.appendChild(bookElement);
+    // Update button values upon clicking on the Read/Unread button
+    bookReadButton.addEventListener('click', () => {
+        bookObject.toggleRead();
+        bookReadButton.setAttribute('value', bookObject.getIsBookRead());
+        bookReadButton.textContent = bookObject.getIsBookRead() ? 'Read' : 'Not read';
     });
+
+    const bookDeleteButton = createButtonElement('Delete', 'button', 'btn', 'delete');
+    bookDeleteButton.addEventListener('click', () => {
+        // delete book element from the bookshelf HTML element
+        deleteBookFromBookshelfElement(bookElement);
+        // delete book object from the book library array
+        deleteBookFromLibrary(bookObject);
+    });
+    bookButtonContainer.append(bookReadButton, bookDeleteButton);
+    bookElement.append(bookButtonContainer);
+
+    return bookElement;
+}
+
+function createAndAppendBookElementToBookShelf(bookObject) {
+    if(!(bookObject instanceof Book)) {
+        throw new Error('on createAndAppendBookElementToBookShelf(). Provided argument is not a Book');
+    }
+
+    const bookElement = createBookElementFromBookObject(bookObject);
+    return bookShelf.append(bookElement);
 }
 
 function displayAddBookDialog() {
@@ -206,7 +217,7 @@ function displayAddBookDialog() {
         // This variable retrieves the checked value from the two radio inputs.
         const radioReadValue = Array.from(radioReadElements)
             .find(radioChoice => radioChoice.checked).value;
-        console.log(radioReadValue);
+        
         // This variable is used to sanitize the value passed to the book object.
         // When we retrieve the value from the form, this value is returned as a string.
         // What we're doing here is converting it to a Boolean.
@@ -216,6 +227,7 @@ function displayAddBookDialog() {
 
         if(!searchForDuplicateBooks(bookObject)) { // If the book does not exist
             addBookToLibrary(bookObject);
+            createAndAppendBookElementToBookShelf(bookObject);
             // close right after adding the book
             addBookDialog.close();
         } else if(! document.querySelector('#book-error-message')) {
@@ -239,5 +251,4 @@ function displayAddBookDialog() {
     addBookDialog.showModal();
 }
 
-showAllBooksButton.addEventListener('click', ()=> displayBooks());
 addBookButton.addEventListener('click', displayAddBookDialog);
