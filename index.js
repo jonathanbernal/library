@@ -195,7 +195,7 @@ function displayAddBookDialog() {
     const yesLabel = createLabelElementWithForAttribute('Yes', 'read-yes');
     const radioInputYes = createRadioInputElement('read', true, 'read-yes');
     // make yes be selected by default
-    radioInputYes.setAttribute('checked', 'checked');
+    //radioInputYes.setAttribute('checked', 'checked');
     const noLabel = createLabelElementWithForAttribute('No', 'read-no');
     const radioInputNo = createRadioInputElement('read', false, 'read-no');
 
@@ -214,6 +214,7 @@ function displayAddBookDialog() {
         event.preventDefault(); // do not send form data as a GET/POST request
         // log parsed data
         const radioReadElements = document.getElementsByName('read');
+        
         // This variable retrieves the checked value from the two radio inputs.
         const radioReadValue = Array.from(radioReadElements)
             .find(radioChoice => radioChoice.checked).value;
@@ -230,6 +231,7 @@ function displayAddBookDialog() {
             createAndAppendBookElementToBookShelf(bookObject);
             // close right after adding the book
             addBookDialog.close();
+            document.body.removeChild(addBookDialog);
         } else if(! document.querySelector('#book-error-message')) {
                 const addBookErrorMessageElement = createParagraphElement('Error. This book already exists.', 'book-error-message', 'error-message');
                 bookForm.append(addBookErrorMessageElement);
@@ -239,6 +241,7 @@ function displayAddBookDialog() {
     const cancelButton = createButtonElement('Cancel', 'button', 'btn');
     cancelButton.addEventListener('click', () => {
         addBookDialog.close();
+        document.body.removeChild(addBookDialog);
     });
 
     dialogButtonContainer.append(addBookToLibraryButton, cancelButton);
