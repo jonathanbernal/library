@@ -1,6 +1,6 @@
 # Library Project
 
-<img src="assets/library_app_demo_v1.png" alt="A screenshot showcasing a demo of the library app. The book information is made up just to showcase what each book looks like on a desktop browser.">
+<img src="assets/library_app_demo_v1.PNG" alt="A screenshot showcasing a demo of the library app. The book information is made up just to showcase what each book looks like on a desktop browser.">
 
 ## Description
 A library web page where you can add books to a list. Each book can be marked as read/unread and updated later if need be. The books are added by title, author, and number of pages.
