@@ -75,6 +75,11 @@ header > h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
+}
+
+.book > .btn-container {
+    margin-top: auto;
 }
 
 .add-book-dialog {
@@ -92,11 +97,6 @@ header > h1 {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-}
-
-.btn-container {
-    display: flex;
-    gap: 1rem;
 }
 
 .add-book-dialog form input[type="text"] {
