@@ -8,10 +8,11 @@ let totalBooksUnread = 0;
 let bookLibrary = [];
 
 class Book {
-    constructor(title, author, isRead) {
+    constructor(title, author, isRead, pages) {
         this.title = title;
         this.author = author;
         this.isRead = isRead;
+        this.pages = pages;
     }
 
     toggleRead = () => {
@@ -229,8 +230,10 @@ function createBookElementFromBookObject (bookObject) {
     bookElement.appendChild(bookInfoElement);
 
     const bookTitleElement = createHeadingElement('h2', bookObject.title, 'book-title');
-    const bookAuthorElement = createParagraphElement(bookObject.author, null, 'book-author');
-    bookInfoElement.append(bookTitleElement, bookAuthorElement);
+    const bookAuthorElement = createParagraphElement(`By: ${bookObject.author}`, null, 'book-author');
+    const bookPagesElement = createParagraphElement(`Pages: ${bookObject.pages}`, null, 'book-pages');
+    bookInfoElement.append(bookTitleElement, bookAuthorElement, bookPagesElement);
+    
 
     const bookButtonContainer = createDivElement(null, '', 'btn-container');
 
@@ -279,8 +282,9 @@ function displayAddBookDialog() {
     const bookForm = createBookFormElement();
     const bookTitle = createInputElement('text', 'title', 'Book Title', 'book-title');
     const bookAuthor = createInputElement('text', 'author', 'Book Author', 'book-author');
+    const bookPages = createInputElement('text', 'pages', 'No. of Pages', 'book-pages');
 
-    bookForm.append(bookTitle, bookAuthor); 
+    bookForm.append(bookTitle, bookAuthor, bookPages); 
 
     const readLabel =  createLabelElementWithForAttribute('Read?', 'radio-input-container');
     
@@ -318,7 +322,7 @@ function displayAddBookDialog() {
         // What we're doing here is converting it to a Boolean.
         const isRadioReadValue = radioReadValue === 'true';
         
-        const bookObject = new Book(bookTitle.value, bookAuthor.value, isRadioReadValue);
+        const bookObject = new Book(bookTitle.value, bookAuthor.value, isRadioReadValue, bookPages.value);
 
         if(!searchForDuplicateBooks(bookObject)) { // If the book does not exist
             addBookToLibrary(bookObject);
